@@ -89,38 +89,38 @@
     ```
   2.导入并解压x264，进入目录，输入以下指令：  
     ```
-    ./configure --prefix=/usr/local/x264 --enable-shared --enable-static
-    make
-    make fprofiled
-    make install
+    ./configure --prefix=/usr/local/x264 --enable-shared --enable-static  
+    make  
+    make fprofiled  
+    make install  
     ```
   3.导入并解压ffmpeg，进入目录，输入以下指令：  
     ```
-    ./configure --prefix=/usr/local/ffmpeg --enable-shared --enable-yasm --enable-libx264 --enable-gpl --enable-pthreads --extra-cflags=-I/usr/local/x264/include --extra-ldflags=-L/usr/local/x264/lib  
-    #!/bin/sh
-    ./configure --prefix=/usr/local/ffmpeg \
-                --enable-shared \
-                --enable-yasm \
-                --enable-libx264 \
-                --enable-decoder=h264 \
-                --enable-gpl \
-                --enable-pthreads    \
-                --extra-cflags=-I/usr/local/x264/include \
-                --extra-ldflags=-L/usr/local/x264/lib \
-                --enable-network \
-                --enable-protocol=tcp \
-                --enable-demuxer=rtsp
-    make
-    make install
+    ./configure --prefix=/usr/local/ffmpeg --enable-shared --enable-yasm --enable-libx264 --enable-gpl --enable-pthreads --extra-cflags=-I/usr/local/x264/include --extra-ldflags=-L/usr/local/x264/lib    
+    #!/bin/sh  
+    ./configure --prefix=/usr/local/ffmpeg \  
+                --enable-shared \  
+                --enable-yasm \  
+                --enable-libx264 \  
+                --enable-decoder=h264 \  
+                --enable-gpl \  
+                --enable-pthreads    \  
+                --extra-cflags=-I/usr/local/x264/include \  
+                --extra-ldflags=-L/usr/local/x264/lib \  
+                --enable-network \  
+                --enable-protocol=tcp \  
+                --enable-demuxer=rtsp  
+    make  
+    make install  
     ```
   4.编译完成后，修改环境编译，在/etc/profile文件下增加如下字段：  
     ```
-    FFMPEG=/usr/local/ffmpeg
-    X264=/usr/local/x264
-    YASM=/usr/local/yasm
-    export FFMPEG X264 YASM
-    export PATH=$PATH:$FFMPEG/bin:$X264/bin:$YASM/bin
-    #export LD_LIBRARY_PATH=$YASM/lib:$X264/lib:$FFMPEG/lib:$LD_LIBRARY_PATH
+    FFMPEG=/usr/local/ffmpeg  
+    X264=/usr/local/x264  
+    YASM=/usr/local/yasm  
+    export FFMPEG X264 YASM  
+    export PATH=$PATH:$FFMPEG/bin:$X264/bin:$YASM/bin  
+    #export LD_LIBRARY_PATH=$YASM/lib:$X264/lib:$FFMPEG/lib:$LD_LIBRARY_PATH  
     ```
 - 用户组设置。
 
