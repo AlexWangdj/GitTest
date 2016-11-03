@@ -15,8 +15,18 @@
 
 **基于 Ubuntu 14.04**
 
+#### 第一部分
 - 安装Ubuntu系统。
 - 添加root用户 `sudo passwd`,并登录`su`。
+- 配置ip ， 服务器ip网卡名字为 em1、em2、em3、em4，编辑配置文件：`sudo vi /etc/network/interfaces`，并用下面的行来替换有关em1的行：
+    ``` 
+    # The primary network interface
+    auto em1
+    iface em1 inet static
+    address IP地址
+    gateway 网关
+    netmask 子网掩码
+    ```
 - 安装更新`apt-get update`。
 - 安装ssh、vim、zip、git、lrzsz，`apt-get -y install ssh vim zip git lrzsz`。
 - 安装mysql、apache，`apt-get -y install mysql-server mysql-client apache2`。
@@ -37,3 +47,79 @@
 - 为数据库添加账户，并赋予全部权限，`grant all privileges on *.* to admin@'%' identified by 'admin';`。
 - 修改mysql配置文件，`vim /etc/mysql/my.cnf`，将`bind-address =   127.0.0.1`删除或注释。
 - 重启系统`reboot`。
+
+#### 第二部分
+- 安装make`apt-get install make`。
+- `apt-get install libmysqlclient-dev`。
+- 安装samba，`apt-get install samba`。
+- 配置samba服务器
+    ```
+    [sambaserver]
+    path = /home/samba
+    read only = No
+    # public = yes
+    valid users = hs 
+    #valid users = root
+    public = no
+    writable = yes
+    printable = no
+    create mask = 0644
+    directory mask = 0755
+
+    [www]
+    path = /var/www
+    read only = No
+    # public = yes
+    valid users = hs 
+    #valid users = root
+    public = no
+    writable = yes
+    printable = no
+    create mask = 0644
+    directory mask = 0755
+    ```
+- 安装c和c++编译器`apt-get install gcc`和`apt-get install g++`。
+- `apt-get install pkg-config`。
+- 安装ffmpeg和x264  
+  1.编译yasm，进入yasm目录，依次输入以下指令：  
+    ```
+    ./configure --prefix=/usr/local/yasm
+    make
+    make install
+    ```
+  2.导入并解压x264，进入目录，输入以下指令：
+    ```
+    ./configure --prefix=/usr/local/x264 --enable-shared --enable-static
+    make
+    make fprofiled
+    make install
+    ```
+  3.导入并解压ffmpeg，进入目录，输入以下指令：
+    ```
+    ./configure --prefix=/usr/local/ffmpeg --enable-shared --enable-yasm --enable-libx264 --enable-gpl --enable-pthreads --extra-cflags=-I/usr/local/x264/include --extra-ldflags=-L/usr/local/x264/lib  
+    #!/bin/sh
+    ./configure --prefix=/usr/local/ffmpeg \
+                --enable-shared \
+                --enable-yasm \
+                --enable-libx264 \
+                --enable-decoder=h264 \
+                --enable-gpl \
+                --enable-pthreads    \
+                --extra-cflags=-I/usr/local/x264/include \
+                --extra-ldflags=-L/usr/local/x264/lib \
+                --enable-network \
+                --enable-protocol=tcp \
+                --enable-demuxer=rtsp
+    make
+    make install
+    ```
+  4.编译完成后，修改环境编译，在/etc/profile文件下增加如下字段：
+    ```
+    FFMPEG=/usr/local/ffmpeg
+    X264=/usr/local/x264
+    YASM=/usr/local/yasm
+    export FFMPEG X264 YASM
+    export PATH=$PATH:$FFMPEG/bin:$X264/bin:$YASM/bin
+    #export LD_LIBRARY_PATH=$YASM/lib:$X264/lib:$FFMPEG/lib:$LD_LIBRARY_PATH
+    ```
+- 用户组设置。
