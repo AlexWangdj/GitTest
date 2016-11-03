@@ -87,14 +87,14 @@
     make
     make install
     ```
-  2.导入并解压x264，进入目录，输入以下指令：
+  2.导入并解压x264，进入目录，输入以下指令：  
     ```
     ./configure --prefix=/usr/local/x264 --enable-shared --enable-static
     make
     make fprofiled
     make install
     ```
-  3.导入并解压ffmpeg，进入目录，输入以下指令：
+  3.导入并解压ffmpeg，进入目录，输入以下指令：  
     ```
     ./configure --prefix=/usr/local/ffmpeg --enable-shared --enable-yasm --enable-libx264 --enable-gpl --enable-pthreads --extra-cflags=-I/usr/local/x264/include --extra-ldflags=-L/usr/local/x264/lib  
     #!/bin/sh
@@ -113,7 +113,7 @@
     make
     make install
     ```
-  4.编译完成后，修改环境编译，在/etc/profile文件下增加如下字段：
+  4.编译完成后，修改环境编译，在/etc/profile文件下增加如下字段：  
     ```
     FFMPEG=/usr/local/ffmpeg
     X264=/usr/local/x264
@@ -123,3 +123,12 @@
     #export LD_LIBRARY_PATH=$YASM/lib:$X264/lib:$FFMPEG/lib:$LD_LIBRARY_PATH
     ```
 - 用户组设置。
+
+
+**基于 Windows 7 & Windows 10**
+
+- 安装 `phpStudy` 到 `D:\php` 文件夹，复制 `cgi-bin`、`html`、`media` 文件夹到 `D:\var\www` 文件夹。
+- 配置 `mysql` 用户权限。数据连接在 `D:\var\www\html\cgi\inc\common.php` 文件中配置。
+- 复制 `D:\var\www\html\site.conf` 为 `D:\php\Apache\conf\vhosts.conf` 。
+- 打开 `phpStudy` ，切换 `php版本` 至 `"apache + php5.5"`，切换 `运行模式` 至 `"系统服务"` ，重启 `phpStudy` 。
+
